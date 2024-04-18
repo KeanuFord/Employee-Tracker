@@ -28,4 +28,5 @@ CREATE TABLE employees (
     REFERENCES roles(id),
 
     manager_id INT
+    REFERENCES employees(id)
 );
