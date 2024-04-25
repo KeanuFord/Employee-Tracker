@@ -69,7 +69,7 @@ start();
 
 function viewEmployees() {
     pool.query(
-      `SELECT employee.id, employee.first_name, employee.last_name, title, salary, department.name AS department, CONCAT(manager.first_name, ' ', manager.last_name) AS manager
+      `SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, title, salary,  CONCAT(manager.first_name, ' ', manager.last_name) AS manager
       FROM employees employee
       JOIN roles role
       ON role_id = role.id
@@ -77,6 +77,31 @@ function viewEmployees() {
       ON department_id = department.id
       LEFT JOIN employees manager
       ON manager.id = employee.manager_id;`,
+        (err, res) => {
+            if (err) throw err;
+            console.table(res.rows);
+            start();
+        }
+    );
+}
+
+function viewDepartments() {
+    pool.query(
+        `SELECT * FROM departments`,
+        (err, res) => {
+            if (err) throw err;
+            console.table(res.rows);
+            start();
+        }
+    );
+}
+
+function viewRoles() {
+    pool.query(
+        `SELECT roles.id, title, salary, department.name AS department
+        FROM roles
+        JOIN departments department
+        ON department_id = department.id;`,
         (err, res) => {
             if (err) throw err;
             console.table(res.rows);
