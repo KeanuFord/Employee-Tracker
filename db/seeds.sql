@@ -7,8 +7,8 @@ INSERT INTO departments (name) VALUES
     ('Legal');
 
 INSERT INTO roles (title, salary, department_id) VALUES
-    ('Software Engineer', 100000, 1),
     ('Senior Software Engineer', 120000, 1),
+    ('Software Engineer', 100000, 1),
     ('Sales Lead', 80000, 2),
     ('Salesperson', 60000, 2),
     ('Account Manager', 90000, 3),
