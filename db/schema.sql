@@ -16,17 +16,19 @@ CREATE TABLE roles (
     department_id INT NOT NULL,
     FOREIGN KEY (department_id)
     REFERENCES departments(id)
+    ON DELETE SET NULL
 );
 
 CREATE TABLE employees (
     id SERIAL PRIMARY KEY,
-    first_name VARCHAR(30) NOT NULL,
-    last_name VARCHAR(30) NOT NULL,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
     role_id INT NOT NULL,
     
     FOREIGN KEY (role_id)
-    REFERENCES roles(id),
+    REFERENCES roles(id)
+    ON DELETE CASCADE,
 
-    manager_id INT
+    manager_id INT DEFAULT NULL
     REFERENCES employees(id)
 );
