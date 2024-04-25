@@ -109,3 +109,97 @@ function viewRoles() {
         }
     );
 }
+
+function addEmployee() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'first_name',
+                message: 'Enter employee first name:'
+            },
+            {
+                type: 'input',
+                name: 'last_name',
+                message: 'Enter employee last name:'
+            },
+            {
+                type: 'input',
+                name: 'role_id',
+                message: 'Enter employee role ID:'
+            },
+            {
+                type: 'input',
+                name: 'manager_id',
+                message: 'Enter employee manager ID:'
+            }
+        ])
+        .then((answer) => {
+            pool.query(
+                `INSERT INTO employees (first_name, last_name, role_id, manager_id)
+                VALUES ($1, $2, $3, $4)`,
+                [answer.first_name, answer.last_name, answer.role_id, answer.manager_id],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`Employee ${answer.first_name} ${answer.last_name} added.`);
+                    start();
+                }
+            );
+        });
+}
+
+function addDepartment() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'name',
+                message: 'Enter department name:'
+            }
+        ])
+        .then((answer) => {
+            pool.query(
+                `INSERT INTO departments (name)
+                VALUES ($1)`,
+                [answer.name],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`Department ${answer.name} added.`);
+                    start();
+                }
+            );
+        });
+}
+
+function addRole() {
+    inquirer
+        .prompt([
+            {
+                type: 'input',
+                name: 'title',
+                message: 'Enter role title:'
+            },
+            {
+                type: 'input',
+                name: 'salary',
+                message: 'Enter role salary:'
+            },
+            {
+                type: 'input',
+                name: 'department_id',
+                message: 'Enter department ID:'
+            }
+        ])
+        .then((answer) => {
+            pool.query(
+                `INSERT INTO roles (title, salary, department_id)
+                VALUES ($1, $2, $3)`,
+                [answer.title, answer.salary, answer.department_id],
+                (err, res) => {
+                    if (err) throw err;
+                    console.log(`Role ${answer.title} added.`);
+                    start();
+                }
+            );
+        });
+}
